@@ -1,4 +1,4 @@
-# Lively: Real-Time Event Check-In App
+# Lively: Real-Time Event Check-In Application
 
 Lively is a full-stack real-time event check-in application built with Expo (React Native) for the frontend and Node.js/Express/GraphQL/Prisma for the backend.
 
