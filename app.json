@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Lively",
-    "slug": "Lively",
+    "name": "Hypespace",
+    "slug": "Hypespace",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "lively",
+    "scheme": "hypespace",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
