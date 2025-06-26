@@ -5,7 +5,7 @@ const BrandingHeader = () => (
   <View style={styles.container}>
     {/* Replace with your logo image if available */}
     <Text style={styles.logo}>📱</Text>
-    <Text style={styles.title}>Lively</Text>
+    <Text style={styles.title}>Hypespace</Text>
   </View>
 );
 

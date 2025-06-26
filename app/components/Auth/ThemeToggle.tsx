@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
 import { useThemeStore } from '../../store/useThemeStore';
 
-const THEME_KEY = 'lively_theme';
+const THEME_KEY = 'hypespace_theme';
 
 const ThemeToggle = () => {
   const theme = useThemeStore(state => state.theme);

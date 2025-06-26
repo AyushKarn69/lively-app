@@ -5,7 +5,7 @@ import { apolloClient } from './graphql/client';
 import RootNavigator from './navigation/RootNavigator';
 import { useThemeStore } from './store/useThemeStore';
 
-const THEME_KEY = 'lively_theme';
+const THEME_KEY = 'hypespace_theme';
 
 export default function App() {
   const setTheme = useThemeStore(state => state.setTheme);

@@ -1,5 +1,5 @@
 {
-  "name": "lively-backend-api",
+  "name": "hypespace-backend-api",
   "version": "1.0.0",
   "main": "src/index.ts",
   "license": "MIT",
