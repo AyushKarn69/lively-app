@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
 import BrandingHeader from '../components/Auth/BrandingHeader';
 import ThemeToggle from '../components/Auth/ThemeToggle';
 import { useAuthStore } from '../store/useAuthStore';
@@ -14,15 +14,21 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={[styles.container, theme === 'dark' && styles.containerDark]}>
-      <BrandingHeader />
-      <Button title="Login" onPress={handleLogin} color="#4f46e5" />
-      <ThemeToggle />
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={[styles.container, theme === 'dark' && styles.containerDark]}>
+        <BrandingHeader />
+        <Button title="Login" onPress={handleLogin} color="#4f46e5" />
+        <ThemeToggle />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

@@ -1,8 +1,10 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EventAttendees from '../components/Events/EventAttendees';
 import JoinButton from '../components/Events/JoinButton';
+import { useThemeStore } from '../store/useThemeStore';
 
 const EVENT_QUERY = gql`
   query Event($id: ID!) {
@@ -35,6 +37,9 @@ export default function EventDetailScreen({ route, navigation }: any) {
     onCompleted: () => refetch(),
     onError: (err) => Alert.alert('Error', err.message),
   });
+  const theme = useThemeStore(state => state.theme);
+  const backgroundColor = theme === 'dark' ? '#18181b' : '#fff';
+  const textColor = theme === 'dark' ? '#fff' : '#000';
 
   if (loading) return <ActivityIndicator style={{ flex: 1 }} />;
   if (error) return <Text>Error: {error.message}</Text>;
@@ -59,25 +64,31 @@ export default function EventDetailScreen({ route, navigation }: any) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{event.name}</Text>
-      <Text style={styles.info}>{event.location}</Text>
-      <Text style={styles.info}>
-        {isValidDate
-          ? dateObj.toLocaleDateString('en-GB', {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric',
-            })
-          : 'No date'}
-      </Text>
-      <JoinButton joined={joined} onJoin={handleJoin} />
-      <EventAttendees attendees={event.attendees} />
-    </View>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor }]}>
+      <View style={[styles.container, { backgroundColor }]}>
+        <Text style={[styles.title, { color: textColor }]}>{event.name}</Text>
+        <Text style={[styles.info, { color: textColor }]}>{event.location}</Text>
+        <Text style={[styles.info, { color: textColor }]}>
+          {isValidDate
+            ? dateObj.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+              })
+            : 'No date'}
+        </Text>
+        <JoinButton joined={joined} onJoin={handleJoin} />
+        <EventAttendees attendees={event.attendees} />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

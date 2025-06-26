@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { UserGroupIcon } from 'react-native-heroicons/outline';
@@ -15,19 +16,26 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => (
-  <TouchableOpacity style={styles.card} onPress={onPress}>
-    <Text style={styles.name}>{event.name}</Text>
-    <Text style={styles.location}>{event.location}</Text>
-    <Text style={styles.time}>{new Date(event.startTime).toLocaleString()}</Text>
-    <View style={styles.row}>
-      <Text style={{ color: event.joined ? 'green' : 'red', fontWeight: 'bold' }}>  
-        {event.joined ? 'Joined' : 'Join'}
-      </Text>
-      <View style={[styles.badge, { flexDirection: 'row', alignItems: 'center' }]}>
-        <UserGroupIcon color="#3730a3" size={18} style={{ marginRight: 4 }} />
-        <Text style={styles.badgeText}>{event.attendees}</Text>
+  <TouchableOpacity onPress={onPress} style={{ marginBottom: 16 }}>
+    <LinearGradient
+      colors={['#8E2DE2', '#4A00E0']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.card}
+    >
+      <Text style={styles.name}>{event.name}</Text>
+      <Text style={styles.location}>{event.location}</Text>
+      <Text style={styles.time}>{new Date(event.startTime).toLocaleString()}</Text>
+      <View style={styles.row}>
+        <Text style={{ color: event.joined ? 'lime' : 'white', fontWeight: 'bold' }}>
+          {event.joined ? 'Joined' : 'Join'}
+        </Text>
+        <View style={[styles.badge, { flexDirection: 'row', alignItems: 'center' }]}> 
+          <UserGroupIcon color="#3730a3" size={18} style={{ marginRight: 4 }} />
+          <Text style={styles.badgeText}>{event.attendees}</Text>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   </TouchableOpacity>
 );
 
@@ -35,10 +43,8 @@ export default EventCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#f9fafb',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
     shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -48,15 +54,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 4,
+    color: '#fff',
   },
   location: {
     fontSize: 14,
-    color: '#6b7280',
+    color: '#e0e7ff',
     marginBottom: 2,
   },
   time: {
     fontSize: 13,
-    color: '#6366f1',
+    color: '#d1c4e9',
     marginBottom: 8,
   },
   row: {
