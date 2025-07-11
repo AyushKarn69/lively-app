@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import BrandingHeader from '../components/Auth/BrandingHeader';
 import ThemeToggle from '../components/Auth/ThemeToggle';
 import { useAuthStore } from '../store/useAuthStore';
