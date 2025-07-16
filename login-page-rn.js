@@ -1,46 +1,57 @@
-import { Ionicons } from '@expo/vector-icons';
-import MaskedView from '@react-native-masked-view/masked-view';
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useAuthStore } from '../store/useAuthStore';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function LoginScreen() {
-  const login = useAuthStore((state: any) => state.login);
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
-    login();
+    if (!username.trim() || !password.trim()) {
+      Alert.alert('Error', 'Please enter both username and password');
+      return;
+    }
+    
+    // Navigate to events screen
+    navigation.navigate('Events');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/images/app_bg.jpg')}
-        style={styles.bgImage}
-        resizeMode="cover"
+      <LinearGradient
+        colors={['#4C1D95', '#1E3A8A', '#312E81']}
+        style={styles.gradient}
       >
-        {/* App Name Top Left */}
-        <View style={styles.appNameContainer}>
-          <MaskedView
-            maskElement={
-              <Text style={styles.appName}>HypeSpace</Text>
-            }
-          >
-            <LinearGradient
-              colors={['#FF6EC4', '#7873F5']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ height: 70 }}
-            >
-              <Text style={[styles.appName, { opacity: 0 }]}>HypeSpace</Text>
-            </LinearGradient>
-          </MaskedView>
-          <Text style={styles.subtitleText}>Real-time event check-in</Text>
-        </View>
-          <View style={styles.contentMovedDown}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
+        >
+          <View style={styles.content}>
+            {/* Logo Section */}
+            <View style={styles.logoContainer}>
+              <LinearGradient
+                colors={['#A855F7', '#EC4899']}
+                style={styles.logoGradient}
+              >
+                <Ionicons name="calendar" size={32} color="white" />
+              </LinearGradient>
+              <Text style={styles.logoText}>Hypespace</Text>
+              <Text style={styles.subtitleText}>Real-time event check-in</Text>
+            </View>
+
+            {/* Form Section */}
             <View style={styles.formContainer}>
               {/* Username Input */}
               <View style={styles.inputContainer}>
@@ -63,6 +74,7 @@ export default function LoginScreen() {
                   />
                 </View>
               </View>
+
               {/* Password Input */}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Password</Text>
@@ -89,72 +101,76 @@ export default function LoginScreen() {
                   </TouchableOpacity>
                 </View>
               </View>
-              {/* Login Button */}
+
+              {/* Sign In Button */}
               <TouchableOpacity
                 style={styles.signInButton}
                 onPress={handleLogin}
-                activeOpacity={0.5}
+                activeOpacity={0.8}
               >
                 <LinearGradient
-                  colors={['#7F56D9', '#7873F5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
+                  colors={['#8B5CF6', '#EC4899']}
                   style={styles.signInGradient}
                 >
                   <Text style={styles.signInText}>Sign In</Text>
                 </LinearGradient>
               </TouchableOpacity>
+
+              {/* Sign Up Link */}
+              <View style={styles.signUpContainer}>
+                <Text style={styles.signUpText}>
+                  Don't have an account?{' '}
+                  <Text style={styles.signUpLink}>Sign up</Text>
+                </Text>
+              </View>
             </View>
           </View>
-        
-      </ImageBackground>
+        </KeyboardAvoidingView>
+      </LinearGradient>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
-  bgImage: {
+  gradient: {
     flex: 1,
-    width: '100%',
-    height: '100%',
   },
   keyboardView: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
-  contentMovedDown: {
+  content: {
     flex: 1,
-    top:80,
     justifyContent: 'center',
     maxWidth: 400,
     alignSelf: 'center',
     width: '100%',
-    marginBottom: 60,
   },
-  appNameContainer: {
-    position: 'absolute',
-    top: 100,
-    left: 0,
-    zIndex: 40,
-    paddingTop: 40,
-    paddingLeft: 40,
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 48,
   },
-  appName: {
-    color: '#fff',
+  logoGradient: {
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  logoText: {
+    fontSize: 32,
     fontWeight: 'bold',
-    fontSize: 54,
-    letterSpacing: 2,
-    fontFamily: 'Urbanist',
+    color: 'white',
+    marginBottom: 8,
   },
   subtitleText: {
-    fontSize: 18,
-    color: '#D3C9F5',
-    fontFamily: 'Urbanist',
+    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.8)',
   },
   formContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -162,21 +178,15 @@ const styles = StyleSheet.create({
     padding: 32,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
-    width: '90%',
-    maxWidth: 500,
-    alignSelf: 'center',
-    marginTop: 30, // 30dp from the subtitle
-    opacity: 1,
   },
   inputContainer: {
     marginBottom: 24,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
-    color: ' #A89EC9',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 8,
-    fontFamily: 'Poppins',
   },
   inputWrapper: {
     flexDirection: 'row',
@@ -195,7 +205,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Poppins',
   },
   passwordInput: {
     paddingRight: 40,
@@ -219,6 +228,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
-    fontFamily: 'Poppins',
+  },
+  signUpContainer: {
+    marginTop: 24,
+    alignItems: 'center',
+  },
+  signUpText: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 14,
+  },
+  signUpLink: {
+    color: '#C084FC',
+    textDecorationLine: 'underline',
   },
 });
+
+export default LoginScreen;
